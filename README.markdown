@@ -72,6 +72,31 @@ Please note that whitewashing implicitly also sanitizes your HTML, as it uses th
 
 Also note the existence of <tt>whitewash\_document</tt>, which is analogous to <tt>sanitize\_document</tt>.
 
+Rails Plugin
+-----
+
+When installed as a Rails plugin, Dryopteris adds the class method "sanitize_fields" to ActiveRecord.
+You can invoke it like this:
+
+    class User < ActiveRecord::Base
+      sanitize_fields
+    end
+
+Dryopteris will add a before_save callback which will strip tags from all string and text fields in the model.
+
+You can specify that only certain fields should be sanitized with :only ...
+
+    sanitize_fields :only => [:username]
+
+... or specify that some fields should be excluded with :except
+
+    sanitize_fields :except => [:password]
+
+By default, the Rails plugin will strip tags entirely. You can specify that tags should be sanitized
+instead with the :allow_tags parameter.
+
+    sanitize_fields :allow_tags => [:profile]
+
 Standing on the Shoulders of Giants
 -----
 
